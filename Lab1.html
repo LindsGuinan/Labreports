@@ -5,19 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Template for Fractal Geometry Computational Lab Reports" />
   <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
-  <link 
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
   <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
-    // This configures MathJax to recognize $...$ and $$...$$ as math delimiters.
     window.MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$','$$'], ['\\[','\\]']],
       }
-    }
+    };
   </script>
   <title>Fractal Geometry Lab Report</title> 
 </head>
@@ -26,15 +22,15 @@
   <header>
     <h1>Fractal Geometry Lab Report</h1>
     <p class="author">
-      [Lindsey Guinan] <br />
-      [Feburary 17, 2025]
+      Lindsey Guinan <br />
+      February 17, 2025
     </p>
-  </Moudle 1 Lab Report>
+  </header>
   
   <div class="abstract">
     <h2>Abstract</h2>
     <p>
-      In this lab report, we will investigate the use of Python's Turtle Graphics module to draw a simple square. This experiment will allow us to explore fundamental programming concepts such as loops, function calls, and coordinate- based movement. By using the turtle libray in python, we will be able to generate a square through a sequence of movements from forward and turn commands. This experiment demonstrates the basics of drawing.  
+      In this lab report, we investigate Python's Turtle Graphics module to draw a simple square. This experiment explores programming concepts such as loops, function calls, and coordinate-based movement. By using the Turtle library in Python, we generate a square through a sequence of forward and turn commands. This experiment demonstrates the basics of drawing.
     </p>
   </div>
 
@@ -54,51 +50,27 @@
 
   <main>
     <article class="indent-pars">
-      
-      <!-- INTRODUCTION SECTION -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          In this lab, we will explore the basics of using the Turtle module in Python to create simple graphics. Turtle graphics allow us to provide an intuitive way to draw shapes by controlling a virtual turtle with movement and drawing commands. The primary objective of this lab is to learn how to initialize a turtle, customize its color and background, and move it to a suitable starting position. Once these steps are completed, we will use simple commands to draw a simple square. Through this lab, we will gain an understanding of how to manipulate the turtle's properties and control its movements, which forms the foundation for being able to create more complex graphics in the future. The lab will also introduce us to Python programming language and help us learn how use loops, functions, and coordinate- based movement, which makes it a valuable introduction to graphical programming in python. 
+          In this lab, we explore the basics of using the Turtle module in Python to create graphics. Turtle graphics provide an intuitive way to draw shapes by controlling a virtual turtle with movement and drawing commands. The primary objective is to initialize a turtle, customize its color and background, and move it to a suitable starting position. We will use simple commands to draw a square and learn how to manipulate the turtle’s properties for more complex graphics. This lab introduces Python programming and concepts such as loops, functions, and coordinate-based movement.
         </p>
       </section>
 
-      <!-- BACKGROUND SECTION -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
       <section id="background">
         <h2>Background</h2>
         <p>
-          Python's turtle module is a modern implementation that is used to teach promgramming throguh visual representation. The module makes it easy for beginners to understand fundamental programming concepts such as loops, function, and coordinate- based movement. By using simple commands, the users are able to manipulate the turtle's position, direction, and appearance to create different shapes and patterns. 
+          Python's Turtle module is used to teach programming through visual representation. It helps beginners understand fundamental programming concepts like loops, functions, and coordinate-based movement. Simple commands allow users to manipulate the turtle’s position, direction, and appearance to create various shapes and patterns.
         </p>
       </section>
 
-      <!-- METHODS / ALGORITHM SECTION -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-          Below is our python code that imports the turtle package, initializes the turtle, sets the turtle's color and background color, and starts to move the turtle. 
+          Below is our Python code that imports the Turtle package, initializes the turtle, sets its color and background color, and starts moving it.
         </p>
 
-
-
-
-
-<!-- -------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------- -->
-<!-- -------------------------------------------------------------------------------------------- -->
-<pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+        <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
 from turtle_setup import *
 # Initialize the turtle
 initializeTurtle()
@@ -107,153 +79,64 @@ color('blue')
 bgcolor('white')
 
 # Move to a suitable starting position
-jump(200, 200)  # Adjust these values as needed to center the square
+jump(200, 200)  # Adjust these values as needed
 face(0)  # Ensures the turtle is facing up
-
 
 forward(100)
 
-
 # Display the drawing
-show()
+show()</code></pre>
 
-</code></pre>
-
-
-We then extend these steps to draw polygons with the turtle
-        
-# Step 1: Initialize the turtle canvas
+        <p>We then extend these steps to draw polygons with the turtle.</p>
+        <pre><code class="language-python"># Step 1: Initialize the turtle canvas
 canvas_width = 1000
 canvas_height = 800
 initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
 
-# Step 2: Set up helper functions for random colors and drawing polygons
-
+# Step 2: Set up helper functions
 import random
-import math
 
-# Function to generate a random color in RGB format
 def random_color():
-    r = random.random()
-    g = random.random()
-    b = random.random()
-    return color_rgb(r, g, b)
+    return color_rgb(random.random(), random.random(), random.random())
 
-# Function to draw a polygon with 'n_sides' and the given 'side_length'
 def draw_polygon(n_sides, side_length):
-    angle = 360 / n_sides  # Calculate the internal angle of the polygon
+    angle = 360 / n_sides
     for _ in range(n_sides):
         forward(side_length)
         right(angle)
 
-# Step 3: Draw a horizontal line of polygons, increasing the number of sides from 3 to 50
+# Step 3: Draw a horizontal line of polygons
+start_x, start_y = 100, 300
+jump(start_x, start_y)
 
-# Starting position for the line of polygons (positive coordinates, on-screen)
-start_x = 100  # Start at x = 200 (positive)
-start_y = 300  # Start at y = 300 (positive, going down the canvas)
-jump(start_x, start_y)  # Move the turtle to the starting point
-
-side_length = 20  # Length of each side of the polygon
-spacing = 20  # Spacing between each polygon
+side_length = 20
+spacing = 20
 
 for n_sides in range(3, 20):
-    color(random_color())  # Set a random color for each polygon
-    draw_polygon(n_sides, side_length)  # Draw the polygon with n sides
-    penup()  # Stop drawing when moving to the next position
-    jump(getx() + spacing + side_length, start_y)  # Move to the right for the next polygon
-    pendown()  # Start drawing again
+    color(random_color())
+    draw_polygon(n_sides, side_length)
+    penup()
+    jump(getx() + spacing + side_length, start_y)
+    pendown()
 
-# Step 4: Display the result
-show()
-
-
-
-
-
+show()</code></pre>
       </section>
 
-      <!-- RESULTS & ANALYSIS SECTION -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
-      <!-- -------------------------------------------------------------------------------------------- -->
       <section id="results">
         <h2>Results &amp; Analysis</h2>
-        <p>
-         After we run this code, we can look at the results of each of the steps and then manipulate these steps and factors to produce our own turtle graphic. 
-        </p>
-        <p>
-          Below are images that are produced by the code
-
-          First, lets look at the image produced when we set the turtle's color, background, location, and initialize it:
-        </p>
-
-        <!-- EXAMPLE FIGURE FOR BROAD VIEW -->
-        <!-- -------------------------------------------------------------------------------------------- -->
+        <p>After running the code, we observe the results and modify factors to produce custom Turtle graphics.</p>
         <figure>
-          <img
-            src="data:fractal_ex.png"
-            width="600"
-            height="400"
-            loading="lazy"
-          />
-         
-            Next, lets look at the image produced when tell the turtle to face up and move, drawing the square.
-        
-          <figure>
-          <img
-            src="data:image/image_ex2.png 
-            alt=
-            width="600"
-            height="400"
-            loading="lazy"
-          />
-          <figcaption>
-     
-          </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal_ex.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Initial turtle setup.</figcaption>
         </figure>
-        
-          </section>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal_ex.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Square drawn by the turtle.</figcaption>
+        </figure>
+      </section>
+    </article>
+  </main>
 
-        <!-- Modify Code -->
-        <!-- -------------------------------------------------------------------------------------------- -->
-        <!-- -------------------------------------------------------------------------------------------- -->
-        <!-- -------------------------------------------------------------------------------------------- -->
-        <!-- -------------------------------------------------------------------------------------------- -->
-        <section id="ModifyCode">
-          <h2>ModifyCode</h2>
-          <p>
-            Now, we will modify the code to customize our own turtle graphics. 
-          
-            <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
-            from turtle_setup import *
-            # Initialize the turtle
-            initializeTurtle()
-            showturtle()
-            color('pink') # set lines as pink 
-            bgcolor('black') # set background as black
-
-            # Move to a suitable starting position
-             jump(450, 300)  # Adjust these values to 450 and 300 to position turtle in middle 
-            face(0)  # Ensures the turtle is facing up
-
-  
-            forward(200) # making this 200 makes the square bigger
-
-
-            # Display the drawing
-            show()
-        
-        
-        </section>
-                </section>
-
-     
-
-
-
-
-      
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
 </body>
