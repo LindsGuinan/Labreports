@@ -65,22 +65,36 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-          Below is our Python code that imports the Turtle package, initializes the turtle, sets its color and background color, and starts moving it.
+         First, we will look at the code that simulates a random walk using Python's turtle graphics.
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
-from turtle_setup import *
-# Initialize the turtle
-initializeTurtle()
-showturtle()
-color('blue')
-bgcolor('white')
+import random
 
-# Move to a suitable starting position
-jump(200, 200)  # Adjust these values as needed
-face(0)  # Ensures the turtle is facing up
+# Step 1: Initialize the turtle canvas
+canvas_width = 1000
+canvas_height = 800
+initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
 
-forward(100)
+# Step 2: Function to perform a random walk (Brownian motion)
+def random_walk(steps, step_length):
+    speed(0)             # Set speed to maximum for faster drawing
+    penup()
+    jump(450, 450)       # Start near the middle of the canvas
+    pendown()
+
+    for _ in range(steps):
+        forward(step_length)               # Move forward by the step length
+        right(random.uniform(-180, 180))   # Turn by a random angle between -180 and 180 degrees
+
+# Step 3: Execute the random walk with increased steps and/or step length
+steps = 1000
+step_length = 10
+
+random_walk(steps, step_length)
+
+# Step 4: Display the result
+show()
 
 # Display the drawing
 show()</code></pre>
