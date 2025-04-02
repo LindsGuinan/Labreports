@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Template for Fractal Geometry Computational Lab Reports" />
+  <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      }
+    };
+  </script>
+  <title>Fractal Geometry Lab Report</title> 
+</head>
+<body id="top">
 
+  <header>
+    <h1>Fractal Geometry Lab Report 2</h1>
+    <p class="author">
+      Lindsey Guinan <br />
+      April 1, 2025
+    </p>
+  </header>
+  
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+       In this lab, we will explore fractal geometry by utilizing recursive algorithms to generate two well-known fractals: the Dragon Curve and the Koch Snowflake. Using Python's turtle graphics library, we will draw the Dragon Curve through recursive splitting and turning at 90- degree angles, with each recursive step reducing the segment length according to a scaling factor. The Koch Snowflake will be created by recursively subdividing an equilateral triangle, introducing smaller triangles at each iteration. These fractals will be drawn with increasing order of complexity, which will demonstrate how simple recursive rules and formulas can result in intricate patterns. Through this lab, we will observe the relationship between recursion and the detail of the fractal shapes in geometry. We will also gain an insight on the power of recursion in computer graphics and its application in generatng fractals which display great mathematical significance. 
+      </section>
+
+    </p>
+  </div>
+
+  <nav role="navigation" class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#methods">Methods / Algorithm</a></li>
+      <li><a href="#results">Results &amp; Analysis</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#appendix">Appendix</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <article class="indent-pars">
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          
+      <section id="background">
+        <h2>Background</h2>
+        <p>
+          Python's Turtle module is used to teach programming through visual representation. It helps beginners understand fundamental programming concepts like loops, functions, and coordinate-based movement. Simple commands allow users to manipulate the turtle’s position, direction, and appearance to create various shapes and patterns.
+        </p>
+      </section>
+
+      <section id="methods">
+        <h2>Methods / Algorithm</h2>
+        <p>
+          Below is our Python code that imports the Turtle package, initializes the turtle, sets its color and background color, and starts moving it.
+        </p>
+
+        <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+from turtle_setup import *
+# Initialize the turtle
+initializeTurtle()
+showturtle()
+color('blue')
+bgcolor('white')
+
+# Move to a suitable starting position
+jump(200, 200)  # Adjust these values as needed
+face(0)  # Ensures the turtle is facing up
+
+forward(100)
+
+# Display the drawing
+show()</code></pre>
+
+        <p>We then extend these steps to draw polygons with the turtle.</p>
+        <pre><code class="language-python"># Step 1: Initialize the turtle canvas
+canvas_width = 1000
+canvas_height = 800
+initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
+
+# Step 2: Set up helper functions
+import random
+
+def random_color():
+    return color_rgb(random.random(), random.random(), random.random())
+
+def draw_polygon(n_sides, side_length):
+    angle = 360 / n_sides
+    for _ in range(n_sides):
+        forward(side_length)
+        right(angle)
+
+# Step 3: Draw a horizontal line of polygons
+start_x, start_y = 100, 300
+jump(start_x, start_y)
+
+side_length = 20
+spacing = 20
+
+for n_sides in range(3, 20):
+    color(random_color())
+    draw_polygon(n_sides, side_length)
+    penup()
+    jump(getx() + spacing + side_length, start_y)
+    pendown()
+
+show()</code></pre>
+      </section>
+
+      <section id="results">
+        <h2>Results &amp; Analysis</h2>
+        <p>When we run the first code, we can see that the turtle draws a square. When we run the second part of the code, we see the results of generating a horizontal line of polygons. </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/lex.2.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Square Drawn by The Turtle.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/ex.2.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Horizontal Line of Polygons.</figcaption>
+        </figure>
+      </section>
+    </article>
+  </main>
+
+
+        
+      </section>
+
+      <!-- Modifications -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="modifications">
+        <h2>Modifications</h2>
+        <p>
+          We can modify this code and add our own touch too! We can change the background color, the size of the square the turtle draws, and changing the coordinates in which the turtle draws the square. 
+        <p>I will change the background color to black, the path of the turtle to pink, and the starting position from (200,200) to (500,450). Let's look at the results! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/myex.1.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Results of Modifications.</figcaption>
+        </figure>
+      </section>
+
+      <!-- CONCLUSION SECTION -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>
+          In this lab, we utilized Python's turtle graphics to generate a sequence of polyogns with increasing sides, ranging from triangles to 19-sided shapes. By implementing a structured approach, we initialized a canvas, defined helper functions for color randomization and polygon drawing, and positioned the polygons in a horizontal sequence. The use of random colors added visual variety, while the incremental increase in the number of sides demonstrated the geometric transformation from simple to complex shapes.
+
+This exercise provided insights into computational geometry, the importance of precise angle calculations, and the versatility of turtle graphics for creative visualizations. Additionally, it reinforced programming concepts such as loops, functions, and coordinate positioning. 
+        </p>
+      </section>
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
