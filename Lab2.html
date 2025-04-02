@@ -98,39 +98,28 @@ show()
 
 </code></pre>
 
-        <p>We then extend these steps to draw polygons with the turtle.</p>
-        <pre><code class="language-python"># Step 1: Initialize the turtle canvas
-canvas_width = 1000
-canvas_height = 800
-initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
+        <p>Now we will look at the code that will draw a straight line with a zigzag pattern in the middle. </p>
+        <pre><code class="language-python">
+        initializeTurtle()
+        showturtle()
 
-# Step 2: Set up helper functions
-import random
+        jump(50, 400)
+        face(90)
 
-def random_color():
-    return color_rgb(random.random(), random.random(), random.random())
 
-def draw_polygon(n_sides, side_length):
-    angle = 360 / n_sides
-    for _ in range(n_sides):
-        forward(side_length)
-        right(angle)
+        # Line with blip
+        forward(800 / 3)
+        left(60)
+        forward(800 / 3)
+        right(120)
+        forward(800 / 3)
+        left(60)
+        forward(800 / 3)
 
-# Step 3: Draw a horizontal line of polygons
-start_x, start_y = 100, 300
-jump(start_x, start_y)
 
-side_length = 20
-spacing = 20
 
-for n_sides in range(3, 20):
-    color(random_color())
-    draw_polygon(n_sides, side_length)
-    penup()
-    jump(getx() + spacing + side_length, start_y)
-    pendown()
-
-show()</code></pre>
+show()
+</code></pre>
       </section>
 
       <section id="results">
