@@ -1,1 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Template for Fractal Geometry Computational Lab Reports" />
+  <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      }
+    };
+  </script>
+  <title>Fractal Geometry Lab Report</title> 
+</head>
+<body id="top">
 
+  <header>
+    <h1>Fractal Geometry Lab Report 3</h1>
+    <p class="author">
+      Lindsey Guinan <br />
+      Feburary 26, 2025
+    </p>
+  </header>
+  
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+      In this lab, we will explore fractal geometry by utilizing recursive algorithms to generate two well-known fractals: the Dragon Curve and the Koch Snowflake. Fractals are shapes that look the same no matter how much you zoom in on them. Using Python’s turtle graphics library, we will draw these fractals, which are made by repeating a simple rule over and over again. For the Dragon Curve, we will draw this through recursive splitting and turning of 90- degree angles repeatedly. We will create the Koch Snowflake by recursively subdividing an equilateral triangle, introducing smaller triangles at each iteration. These fractals will be drawn with an increasing order of complexity, which will demonstrate how simple recursive rules and formulas can result in intricate patterns. Through this lab, we will observe the relationship between recursion and the detail of the fractal shapes in geometry. We will also gain an insight on the power of recursion in computer graphics and its application in generating fractals which display great mathematical significance. 
+      </section>
+
+    </p>
+  </div>
+
+  <nav role="navigation" class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#methods">Methods / Algorithm</a></li>
+      <li><a href="#results">Results &amp; Analysis</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <article class="indent-pars">
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          Fractals and randomness play an important role in many natural and computational systems. Fractals are patterns that repeat at different scales, meaning that no matter how much you zoom in, the shape remains similar to the whole. They can be found in nature such as in snowflakes, crystals, and lightning. We will also explore random walks which can be used to simulate unpredictable movement. Examples of this are the way gas particles move in a container, stock market prices, and the spread of heat in solids. In this lab, we will use Python's turtle graphics to explore both fractals and randomness. We will focus on The Koch Snowflake, The Dragon Curve, and Random Walks. The Koch Snowflake is a fractal that starts as a triangle and adds smaller triangles to each side in a repeating pattern. The Dragon Curve is a fractal that bends at 90-degree angles, forming a jagged, yet structured pattern. The Random Walks will simulate random movement in two dimensions, mimicking real-world unpredictable paths. By adjusting parameters such as recursion depth and step size, we can analyze how different fractals evolve and how randomness affects movement. This lab will help us understand how simple rules can create both structured complexity and chaotic behavior. 
+      <section id="background">
+        <h2>Background</h2>
+        <p>
+          Now, we will explore the background of fractals and recursive patterns. Fractals are geometric figures that exhibit self- similarity, meaning that smaller versions of the shape appear within the larger structure. They are commonly generated using recursion, where a function repeatedly calls itself with smaller input values. A random walk is a path made up of a sequence of random steps in different directions. This is commonly used to simulate Brownian motion, which describes how microscopic particles move unpredictably in a fluid. In this lab, we will implement a random walk where a virtual turtle moves forward in random directions at each step. Over time, this creates an unpredictable, yet structured path. Applications of fractals are widely used in computer graphics, scientific modeling, and natural simulations such as computer- generated landscapes (mountains and clouds), data compresssion (fractals can help reduce image file sizes), and future modeling (river formations, lightning patterns). Random walks are used in physics (modeling diffusion and particle motion), finance (prediciting stock market fluctuations), and biology (studying animal movement patterns). By coding and visualizing these processes and patterns, we are able to gain a deeper understanding of how mathematical concepts shape the natural and digital world. 
+        </p>
+      </section>
+
+      <section id="methods">
+        <h2>Methods / Algorithm</h2>
+        <p>
+         First, we will look at the code that simulates a random walk using Python's turtle graphics.
+        </p>
+
+        <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+import random
+
+# Step 1: Initialize the turtle canvas
+canvas_width = 1000
+canvas_height = 800
+initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
+
+# Step 2: Function to perform a random walk (Brownian motion)
+def random_walk(steps, step_length):
+    speed(0)             # Set speed to maximum for faster drawing
+    penup()
+    jump(450, 450)       # Start near the middle of the canvas
+    pendown()
+
+    for _ in range(steps):
+        forward(step_length)               # Move forward by the step length
+        right(random.uniform(-180, 180))   # Turn by a random angle between -180 and 180 degrees
+
+# Step 3: Execute the random walk with increased steps and/or step length
+steps = 1000
+step_length = 10
+
+random_walk(steps, step_length)
+
+# Step 4: Display the result
+show()
+
+</code></pre>
+
+        <p>Now we will look at the code that will draw a straight line with a "blip" in the middle. </p>
+        <pre><code class="language-python">
+        initializeTurtle()
+        showturtle()
+
+        jump(50, 400)
+        face(90)
+
+
+        # Line with blip
+        forward(800 / 3)
+        left(60)
+        forward(800 / 3)
+        right(120)
+        forward(800 / 3)
+        left(60)
+        forward(800 / 3)
+
+
+
+show()
+</code></pre>
+        <p>We can use the blip line that we just made and create a recursive pattern of this blip line. The previous blip line was order 1, so it had one zigzag in the middle. This recursive blip line we will create has order 2, so each zigzag has smaller zigzags inside making it more detailed. We can see from this code that higher orders will create a fractal shape.  </p>
+        <pre><code class="language-python">
+      # Define the blip_line function
+def blip_line(length, order):
+    if order == 0:
+        forward(length)
+    else:
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+        right(120)
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+
+
+initializeTurtle()
+
+# Draw blip lines of different orders
+jump(50, 400)
+face(90)
+color('red')
+blip_line(800, 1)  # Order 1
+
+jump(50, 350)
+face(90)
+color('blue')
+blip_line(800, 2)  # Order 2
+
+show()
+</code></pre>
+             <p>Now we can use these tools to draw a Koch Snowflake, which is a very well-known fractal pattern that resembles a snowflake. This fractal is created using recursive line divisions and turns. We can use a recursive blip line function in which the recursion repeats for each segment, making the pattern more detailed at higher orders.  </p>
+        <pre><code class="language-python">
+     initializeTurtle()
+showturtle()
+
+# Define the blip_line function (Koch curve)
+def blip_line(length, order):
+    if order == 0:
+        forward(length)
+    else:
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+        right(120)
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+
+# Draw the Koch snowflake
+def koch_snowflake(length, order):
+    for _ in range(3):
+        blip_line(length, order)
+        right(120)
+
+# Set up the turtle
+jump(250, 500)
+face(0)
+color('blue')
+
+# Draw the snowflake
+length = 400
+order = 3
+koch_snowflake(length, order)
+
+show()
+</code></pre>
+         <p>Now we will draw the Dragon Curve! At each recursion level of this function, the shape folds upon itself at a 90-degree angle.  </p>
+        <pre><code class="language-python">
+       # Define the dragon curve function
+def dragon_curve(order, length, turn_direction):
+    # Base case: if order is 0, just move forward
+    if order == 0:
+        forward(length)
+    else:
+        # Calculate the new length for each recursive step
+        new_length = length / (2 ** 0.5)
+
+        # Recursively draw the dragon curve, turning right and left as needed
+        dragon_curve(order - 1, new_length, 1)  # First segment
+        right(turn_direction * 90)             # Turn by 90 degrees
+        dragon_curve(order - 1, new_length, -1) # Second segment
+
+# Initialize the turtle for drawing
+initializeTurtle()
+showturtle()
+
+
+# Move the turtle to a starting position
+jump(400, 400)
+face(0)             # Set starting direction
+color('purple')     # Choose a color
+
+# Draw the dragon curve
+order = 10          # Complexity level
+length = 300        # Initial length of each segment
+dragon_curve(order, length, 1)
+
+# Show the final drawing
+show()
+
+</code></pre>
+      </section>
+
+      <section id="results">
+        <h2>Results &amp; Analysis</h2>
+        <p>When we run the first code, the turtle starts at (450,450) and moves 1000 steps of 10 pixels each. After each step, it turns in a random direction. The resulting path is chaotic and unpredictable, similar to how tiny particals move in a fluid.   </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/random walk.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>A Random Walk</figcaption>
+        </figure>
+        <p> When we run the second code, we can see the results of a line with a "blip". </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/blipline.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Blip Line </figcaption>
+        </figure>
+         </figure>
+        <p> When we run the third code, we can see the results of a recursive blip line. As the function is called with a higher order, the pattern becomes more complex. We saw that the order 1 curve in the previous figure had one zigzag in the middle. This blip line is of order 2 and has smaller zigzags inside of each zigzag, making it more detailed. </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/2ndorderblipline.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Recursive Blip Line </figcaption>
+        </figure>
+         <p> When we run the fourth chunk of code, we can see the results of a "blip line" of order 3 which draws a higher- order Koch Curve! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/kochcurve.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Blip Line of Order 3/ Higher- Order Koch Curve </figcaption>
+        </figure>
+          <p> When we run the fifth chunk of code, we can see the result of the Koch Snowflake Fractal. In this function, at order 0 the shape is a simple triangle. At order 1 each side divides into four smaller segments with a peak in the middle. At order 2 the new segments also divide into four, making the pattern more complex. Lastly at otder 3 the shape resembles a snowflake, with highly detailed edges.  </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/kochsnowflake.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Blip Line of Order 3/ Higher- Order Koch Curve </figcaption>
+        </figure>
+            <p> When we run the last chunk of code, we can see the result of drawing the Dragon Curve. This function creates a repreating folding process which is what gives the Dragon Curve its characteristic shape. At order 0: the structure is a straight line, at order 1: two segments form a right angle, at order 2: a more complex shape, with another right- angle fold, at order 3 and higher: the curve begins to form a unique, non- overlapping pattern, and finally at order 10 the final image is an intricate Dragon Curve.  </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/dragoncurve.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>The Dragon Curve </figcaption>
+        </figure>
+      </section>
+    </article>
+  </main>
+
+
+        
+      </section>
+
+      <!-- Modifications -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="modifications">
+        <h2>Modifications</h2>
+        <p>
+          Now, let's experiment and see how the modifications we make change the fractals. 
+           <p>Let's look at the results when we modify the Recursive Blip Line by changing the color of the two lines, changing the order of the bottom line from 1 to 2 and the top one from 2 to 4, and changing the jump.   </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/myrecursive.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>My Blip Line!</figcaption>
+        </figure>
+            <p>Let's look at the results when we modify the Koch Snowflake by changing the color from blue to purple, changing the position of the snowflake, changing the length from 300 to 100, and the order from 10 to 8!  </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/mykochcurve.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>My Koch Snowflake!</figcaption>
+        </figure>
+        <p>Let's look at the results when we change the color of the Dragon Curve to pink, the order from 10 to 13, and the jump fron (400,400) to (300,300)! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/dragoncurve2.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>My Dragon Curve!</figcaption>
+        </figure>
+      </section>
+
+      <!-- CONCLUSION SECTION -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>
+          In this lab, we explored the construction of various fractal and recursive patterns using Python's Turtle Graphics. Through the implementation of the Koch Curve, Dragon Curve, and random walk simulations, we gained insight on how recursion, randomness, and geometric transformations can create intricate and visually compelling designs. By modifying the base shapes and recursion depth, we observed how changes in the rules can significantly alter the complexity and appearance of the different fractals. We also learned that the higher the order, the more complex the fractal will be. We began by experimenting with basic line transformation, such as the Blip Line, which introduced the fundamental concept of breaking a segment into smaller recursive parts. Expanding on this, we generated the Koch Snowflake, learning how fractal growth can transform a simple triangle into a highly detailed shape. Further, we explored random walks, which demonstrated how randomness influences movement patterns and diffusion. Finally, we constructed the Dragon Curve which showed us how self- similar recursive structures can create complex, space- filling curves. This lab deepened our understanding of recursive functions and iterative geometric transformations, reinforcing key programming concepts such as function calls, loops, and conditional structures. Additionally, it demonstrated the power of recursion and randomness in generating mathematical art, bridging the gap between programming and visual creativity. 
+        </p>
+      </section>
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
