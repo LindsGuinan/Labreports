@@ -151,6 +151,41 @@ blip_line(800, 2)  # Order 2
 
 show()
 </code></pre>
+             <p>Now we can use these tools to draw a Koch Snowflake, which is a very well-known fractal pattern that resembles a snowflake. This fractal is created using recursive line divisions and turns. We can use a recursive blip line function in which the recursion repeats for each segment, making the pattern more detailed at higher orders.  </p>
+        <pre><code class="language-python">
+     initializeTurtle()
+showturtle()
+
+# Define the blip_line function (Koch curve)
+def blip_line(length, order):
+    if order == 0:
+        forward(length)
+    else:
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+        right(120)
+        blip_line(length / 3, order - 1)
+        left(60)
+        blip_line(length / 3, order - 1)
+
+# Draw the Koch snowflake
+def koch_snowflake(length, order):
+    for _ in range(3):
+        blip_line(length, order)
+        right(120)
+
+# Set up the turtle
+jump(250, 500)
+face(0)
+color('blue')
+
+# Draw the snowflake
+length = 400
+order = 3
+koch_snowflake(length, order)
+
+show()
 </code></pre>
       </section>
 
