@@ -187,6 +187,41 @@ koch_snowflake(length, order)
 
 show()
 </code></pre>
+         <p>Now we will draw the Dragon Curve! At each recursion level of this function, the shape folds upon itself at a 90-degree angle. The structure of the curve is: order 0: a straight line, order 1: two segments at a right angle, order 2: a complex shape, with another right-angle fold, order 3 and higher: the curve begins to form a unique, non-overlapping pattern, and then at order 10: the final image is a Dragon Curve! </p>
+        <pre><code class="language-python">
+       # Define the dragon curve function
+def dragon_curve(order, length, turn_direction):
+    # Base case: if order is 0, just move forward
+    if order == 0:
+        forward(length)
+    else:
+        # Calculate the new length for each recursive step
+        new_length = length / (2 ** 0.5)
+
+        # Recursively draw the dragon curve, turning right and left as needed
+        dragon_curve(order - 1, new_length, 1)  # First segment
+        right(turn_direction * 90)             # Turn by 90 degrees
+        dragon_curve(order - 1, new_length, -1) # Second segment
+
+# Initialize the turtle for drawing
+initializeTurtle()
+showturtle()
+
+
+# Move the turtle to a starting position
+jump(400, 400)
+face(0)             # Set starting direction
+color('purple')     # Choose a color
+
+# Draw the dragon curve
+order = 10          # Complexity level
+length = 300        # Initial length of each segment
+dragon_curve(order, length, 1)
+
+# Show the final drawing
+show()
+
+</code></pre>
       </section>
 
       <section id="results">
