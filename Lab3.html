@@ -64,91 +64,39 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         First, we will look at the code that simulates a random walk using Python's turtle graphics.
+         First, we will look at the code that tells the turtle to draw an equilateral triangle. 
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
 import random
 
-# Step 1: Initialize the turtle canvas
-canvas_width = 1000
-canvas_height = 800
-initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
-
-# Step 2: Function to perform a random walk (Brownian motion)
-def random_walk(steps, step_length):
-    speed(0)             # Set speed to maximum for faster drawing
-    penup()
-    jump(450, 450)       # Start near the middle of the canvas
-    pendown()
-
-    for _ in range(steps):
-        forward(step_length)               # Move forward by the step length
-        right(random.uniform(-180, 180))   # Turn by a random angle between -180 and 180 degrees
-
-# Step 3: Execute the random walk with increased steps and/or step length
-steps = 1000
-step_length = 10
-
-random_walk(steps, step_length)
-
-# Step 4: Display the result
-show()
-
-</code></pre>
-
-        <p>Now we will look at the code that will draw a straight line with a "blip" in the middle. </p>
-        <pre><code class="language-python">
-        initializeTurtle()
-        showturtle()
-
-        jump(50, 400)
-        face(90)
-
-
-        # Line with blip
-        forward(800 / 3)
-        left(60)
-        forward(800 / 3)
-        right(120)
-        forward(800 / 3)
-        left(60)
-        forward(800 / 3)
-
-
-
-show()
-</code></pre>
-        <p>We can use the blip line that we just made and create a recursive pattern of this blip line. The previous blip line was order 1, so it had one zigzag in the middle. This recursive blip line we will create has order 2, so each zigzag has smaller zigzags inside making it more detailed. We can see from this code that higher orders will create a fractal shape.  </p>
-        <pre><code class="language-python">
-      # Define the blip_line function
-def blip_line(length, order):
-    if order == 0:
+# Define the function to draw an equilateral triangle
+def draw_triangle(length):
+    for _ in range(3):
         forward(length)
+        left(120)
+
+</code></pre>
+
+        <p> Now we can define a recursive function to draw a sierpinski triangle, which is a fractal pattern made up of smaller equilateral triangles. </p>
+        <pre><code class="language-python">
+   # Define the recursive Sierpinski triangle function
+def sierpinski_triangle(length, order):
+    if order == 0:
+        draw_triangle(length)
     else:
-        blip_line(length / 3, order - 1)
+        sierpinski_triangle(length / 2, order - 1)
+        forward(length / 2)
+        sierpinski_triangle(length / 2, order - 1)
+        backward(length / 2)
         left(60)
-        blip_line(length / 3, order - 1)
-        right(120)
-        blip_line(length / 3, order - 1)
+        forward(length / 2)
+        right(60)
+        sierpinski_triangle(length / 2, order - 1)
         left(60)
-        blip_line(length / 3, order - 1)
+        backward(length / 2)
+        right(60)
 
-
-initializeTurtle()
-
-# Draw blip lines of different orders
-jump(50, 400)
-face(90)
-color('red')
-blip_line(800, 1)  # Order 1
-
-jump(50, 350)
-face(90)
-color('blue')
-blip_line(800, 2)  # Order 2
-
-show()
 </code></pre>
              <p>Now we can use these tools to draw a Koch Snowflake, which is a very well-known fractal pattern that resembles a snowflake. This fractal is created using recursive line divisions and turns. We can use a recursive blip line function in which the recursion repeats for each segment, making the pattern more detailed at higher orders.  </p>
         <pre><code class="language-python">
