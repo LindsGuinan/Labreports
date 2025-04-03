@@ -98,75 +98,42 @@ def sierpinski_triangle(length, order):
         right(60)
 
 </code></pre>
-             <p>Now we can use these tools to draw a Koch Snowflake, which is a very well-known fractal pattern that resembles a snowflake. This fractal is created using recursive line divisions and turns. We can use a recursive blip line function in which the recursion repeats for each segment, making the pattern more detailed at higher orders.  </p>
+             <p> Now we will use the function we just made to draw the a sierpinski triangle fractal with an initial side length of 400 and of order 4. </p>
         <pre><code class="language-python">
-     initializeTurtle()
+   initializeTurtle()
 showturtle()
-
-# Define the blip_line function (Koch curve)
-def blip_line(length, order):
-    if order == 0:
-        forward(length)
-    else:
-        blip_line(length / 3, order - 1)
-        left(60)
-        blip_line(length / 3, order - 1)
-        right(120)
-        blip_line(length / 3, order - 1)
-        left(60)
-        blip_line(length / 3, order - 1)
-
-# Draw the Koch snowflake
-def koch_snowflake(length, order):
-    for _ in range(3):
-        blip_line(length, order)
-        right(120)
 
 # Set up the turtle
-jump(250, 500)
-face(0)
-color('blue')
+jump(300, 500)
+face(90)
+color('green')
 
-# Draw the snowflake
+# Draw the Sierpinski triangle
 length = 400
-order = 3
-koch_snowflake(length, order)
+order = 4
+sierpinski_triangle(length, order)
 
 show()
+
 </code></pre>
-         <p>Now we will draw the Dragon Curve! At each recursion level of this function, the shape folds upon itself at a 90-degree angle.  </p>
+         <p>Next, we will introduce the code for the cellular automata. In this chunk of code, we will import NumPy and Matplotlib and define a function plot(x) for visualizing a 2d array. We will then generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. The plot(C) function then visualizes this grid as a grayscale image using matplotlib. After this, we have a code that takes an integer value 90 and converts it into an 8-bit binary representation using Python's string syntax. </p>
         <pre><code class="language-python">
-       # Define the dragon curve function
-def dragon_curve(order, length, turn_direction):
-    # Base case: if order is 0, just move forward
-    if order == 0:
-        forward(length)
-    else:
-        # Calculate the new length for each recursive step
-        new_length = length / (2 ** 0.5)
-
-        # Recursively draw the dragon curve, turning right and left as needed
-        dragon_curve(order - 1, new_length, 1)  # First segment
-        right(turn_direction * 90)             # Turn by 90 degrees
-        dragon_curve(order - 1, new_length, -1) # Second segment
-
-# Initialize the turtle for drawing
-initializeTurtle()
-showturtle()
-
-
-# Move the turtle to a starting position
-jump(400, 400)
-face(0)             # Set starting direction
-color('purple')     # Choose a color
-
-# Draw the dragon curve
-order = 10          # Complexity level
-length = 300        # Initial length of each segment
-dragon_curve(order, length, 1)
-
-# Show the final drawing
-show()
+      import numpy as np
+import matplotlib.pyplot as plt
+#visualizing a 2d array
+def plot(x):
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap = 'gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+#generate a 100x100 grid of zeros 
+    C = np.zeros((100,100)).astype(int)
+C[0,50] = 1
+plot(C)
+#converting integer number 90 into an 8- bit binary representation 
+    num = 90
+print(f'{num:08b}')
 
 </code></pre>
       </section>
