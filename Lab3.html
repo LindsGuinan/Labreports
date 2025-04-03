@@ -136,40 +136,113 @@ plot(C)
 print(f'{num:08b}')
 
 </code></pre>
+         <p>Now, we can create and modify a 3D array called rule. This array represents a rule table for a cellular automaton, where each 3D index corresponds to a combination of neighboring cells and the rule specifies what the central cell should be based on its neighboring cells. This rule can be used in the cellular automaton algorithm to determine the next state of a grid based on the surrounding states.  </p>
+        <pre><code class="language-python">
+   rule = np.zeros((2,2,2))
+
+rule[0,0,0] = 0
+rule[0,0,1] = 1
+rule[0,1,0] = 0
+rule[0,1,1] = 1
+rule[1,0,0] = 1
+rule[1,0,1] = 0
+rule[1,1,0] = 1
+rule[1,1,1] = 0
+
+</code></pre>
+       <p> Using this new rule, we can now create a function that applies a 1D cellular automation rule (like rule 90, rule 30, etc.) to each row  based on the previous row's value. This is a common method used for generating patterns and fractals in cellular automata. The rule table defines how a new cell state is determined from its three upper neighborhoods. We can then generate and display a visual pattern based on the cellular automaton rule applied to the grid C, which was previously defined.    </p>
+        <pre><code class="language-python">
+    #Define the function 
+    def CA(X):
+
+    for i in range(1,X.shape[0]-1): #row
+        for j in range(1,X.shape[1]-1): #col
+
+            N  = X[i-1,j]
+            NW = X[i-1,j-1]
+            NE = X[i-1,j+1]
+
+            X[i,j] = rule[NW,N,NE]
+
+    return X
+    #Create visual pattern
+    plot(CA(C))
+</code></pre>
+        <p> Finally, we can create a chunck of code that applies the rule 90 to a 2D grid, uses the three upper neighbors to compute the next state of each cell, generates a fractal pattern called the sierpinski triangle, and displays the structure using plot. Lastly, we can run multiple cellular automaton simulations using different rules. This will generate and display a visualization of the evolving patterns for each rule and gives us insight on how different rules affect pattern formation in cellular automata, which reveals complex behaviors for simple rules.     </p>
+        <pre><code class="language-python">
+   #Function for generating fractal pattern       
+   def CA(X):
+
+    for i in range(1,X.shape[0]-1): #row
+        for j in range(1,X.shape[1]-1): #col
+
+            X[i,j] = (rule/(2**(4*X[i-1,j-1] + 2*X[i-1,j] + X[i-1,j+1]))) % 2
+
+    return X
+
+rule = 90
+
+plot(CA(C))
+
+#Rule for running multiple cellular automaton simulations using different rules
+  for rule in [30, 62, 90, 110, 126]:
+    plot(CA(C))
+</code></pre>
+    
       </section>
 
       <section id="results">
         <h2>Results &amp; Analysis</h2>
-        <p>When we run the first code, the turtle starts at (450,450) and moves 1000 steps of 10 pixels each. After each step, it turns in a random direction. The resulting path is chaotic and unpredictable, similar to how tiny particals move in a fluid.   </p>
+        <p>In the first chunk of code, we define a function to draw an equilateral triangle. This function is then used to tell the turtle to draw an equilateral triangle. Let's look at the results!  </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/random walk.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
-          <figcaption>A Random Walk</figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Drawing of Equilateral Triangle</figcaption>
         </figure>
-        <p> When we run the second code, we can see the results of a line with a "blip". </p>
+        <p> Next, we define a recursive Sierpinski triangle function and then initialize the turtle to draw this triangle based on the recursive function. </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/blipline.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption>Blip Line </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle2.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>The Sierpinski Triangle </figcaption>
         </figure>
          </figure>
-        <p> When we run the third code, we can see the results of a recursive blip line. As the function is called with a higher order, the pattern becomes more complex. We saw that the order 1 curve in the previous figure had one zigzag in the middle. This blip line is of order 2 and has smaller zigzags inside of each zigzag, making it more detailed. </p>
+        <p> Now, we will enter the topic of cellular automata where we define a function plot(x) for visualizing a 2D array. We will generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/2ndorderblipline.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption>Recursive Blip Line </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/pixel.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automata Grid </figcaption>
         </figure>
-         <p> When we run the fourth chunk of code, we can see the results of a "blip line" of order 3 which draws a higher- order Koch Curve! </p>
+         <p> We then define a rule and use that rule to define the function that applies a 1D cellular automaton rule to each row based on the previous row's value.</p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/kochcurve.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption>Blip Line of Order 3/ Higher- Order Koch Curve </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Fractal Generated by Using Cellular Automata </figcaption>
         </figure>
-          <p> When we run the fifth chunk of code, we can see the result of the Koch Snowflake Fractal. In this function, at order 0 the shape is a simple triangle. At order 1 each side divides into four smaller segments with a peak in the middle. At order 2 the new segments also divide into four, making the pattern more complex. Lastly at otder 3 the shape resembles a snowflake, with highly detailed edges.  </p>
+          <p> When we apply rule 90 to a 2D grid we can see the resulting Sierpinski triangle! </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/kochsnowflake.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption>Blip Line of Order 3/ Higher- Order Koch Curve </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle3.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Sierpinski Triangle </figcaption>
         </figure>
-            <p> When we run the last chunk of code, we can see the result of drawing the Dragon Curve. This function creates a repreating folding process which is what gives the Dragon Curve its characteristic shape. At order 0: the structure is a straight line, at order 1: two segments form a right angle, at order 2: a more complex shape, with another right- angle fold, at order 3 and higher: the curve begins to form a unique, non- overlapping pattern, and finally at order 10 the final image is an intricate Dragon Curve.  </p>
+            <p> Lastly, we can see the results of different rules. First, let's look at the result of using rule 30. Rule 30 generates a chaotic pattern which can be used in randomness and cryptography.</p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/dragoncurve.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption>The Dragon Curve </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule30.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 30  </figcaption>
+        </figure>
+          <p> Rule 62 generates a complex asymmetric pattern</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule62.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 62 </figcaption>
+        </figure>
+         <p> Rule 90 generates a Sierpinski Triangle</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule90.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 90 </figcaption>
+        </figure>
+        <p> Rule 110 is capable of universal computation</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule110.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 110 </figcaption>
+        </figure>
+        <p> Rule 126 produces a fractal- like structure</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule126.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 126 </figcaption>
         </figure>
       </section>
     </article>
