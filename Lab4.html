@@ -64,38 +64,52 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         First, we will look at the code that tells the turtle to draw an equilateral triangle. 
+         First, we will look at a function that draws a binary fractal tree, where each branch splits into two smaller branches, and the process repeats. This code creates a symmetrical, tree-like pattern with branching angles.
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
 import random
 
-# Define the function to draw an equilateral triangle
-def draw_triangle(length):
-    for _ in range(3):
+# Function to draw a fractal tree using recursion
+def fractal_tree(length, depth):
+    if depth == 0:
+        return
+    else:
+
         forward(length)
-        left(120)
+        left(30)
+
+        fractal_tree(length * 0.7, depth - 1)
+
+        right(60)
+
+        fractal_tree(length * 0.7, depth - 1)
+
+        left(30)
+        backward(length)
 
 </code></pre>
 
-        <p> Now we can define a recursive function to draw a sierpinski triangle, which is a fractal pattern made up of smaller equilateral triangles. </p>
+        <p> Now we will set up the environment and execute the fractal_ tree function that we defined previously using a custom turtle graphics environment to create and display a recursive fractal tree.  </p>
         <pre><code class="language-python">
-   # Define the recursive Sierpinski triangle function
-def sierpinski_triangle(length, order):
-    if order == 0:
-        draw_triangle(length)
-    else:
-        sierpinski_triangle(length / 2, order - 1)
-        forward(length / 2)
-        sierpinski_triangle(length / 2, order - 1)
-        backward(length / 2)
-        left(60)
-        forward(length / 2)
-        right(60)
-        sierpinski_triangle(length / 2, order - 1)
-        left(60)
-        backward(length / 2)
-        right(60)
+          
+ # Initialize the turtle
+initializeTurtle(initial_window_size=(500, 500))
+
+# Set up the turtle's starting position and orientation
+jump(250, 450)  # Starting position at the bottom center of the canvas
+face(0)
+color('green')  # Set the pen color
+
+# Set the length and depth for the fractal tree
+length = 100  # Initial length of the main trunk
+depth = 7     # Recursion depth (number of branching levels)
+
+# Draw the fractal tree
+fractal_tree(length, depth)
+
+# Display the drawing
+show()
 
 </code></pre>
              <p> Now we will use the function we just made to draw the a sierpinski triangle fractal with an initial side length of 400 and of order 4. </p>
