@@ -64,18 +64,34 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         First, we will look at the code that tells the turtle to draw an equilateral triangle. 
+        First, we will look at the chunk of code that creates a uniform grid of points between -1 and 1 along the x- and y- axes, based on a specific grid size. The generate_grid functions then uses np.linspace to evenly space the points and np.meshgrid to form a 2D grid. The plot_grid function then visualizes the points by plotting them on a scatter plot. Finally, the grid is generated and displayed, showing a dense array of evenly spcaed blue points across the plane. 
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
-import random
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Define the function to draw an equilateral triangle
-def draw_triangle(length):
-    for _ in range(3):
-        forward(length)
-        left(120)
+# Create a simple 2D grid of points using NumPy
+def generate_grid(size):
+    x = np.linspace(-1, 1, size)  # Generate 'size' number of points between -1 and 1
+    y = np.linspace(-1, 1, size)
+    grid = np.meshgrid(x, y)  # Create a 2D grid of points
+    return grid
 
+# Visualize the grid of points
+def plot_grid(grid):
+    x_grid, y_grid = grid
+    plt.figure(figsize=(10, 10))
+    plt.scatter(x_grid, y_grid, s=1, color='blue')  # Plot the grid points
+    plt.title(f'2D Grid of {len(x_grid)}x{len(y_grid)} points')
+    plt.show()
+
+# Set the size of the grid
+size = 50  # You can adjust this to make the grid denser or sparser
+
+# Generate and plot the grid
+grid = generate_grid(size)
+plot_grid(grid)
 </code></pre>
 
         <p> Now we can define a recursive function to draw a sierpinski triangle, which is a fractal pattern made up of smaller equilateral triangles. </p>
