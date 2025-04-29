@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Template for Fractal Geometry Computational Lab Reports" />
+  <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      }
+    };
+  </script>
+  <title>Fractal Geometry Lab Report</title> 
+</head>
+<body id="top">
+
+  <header>
+    <h1>Fractal Geometry Lab Report 4</h1>
+    <p class="author">
+      Lindsey Guinan <br />
+      March 17, 2025
+    </p>
+  </header>
+  
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+       This lab explores the mathematical foundation and visual representations of fractal geometry through the implementation of recursive algorithms in Python. Specifically, this lab focuses on generating fractal trees using turtle graphics to simulate self- similar, branching structures. Two recursive functions were developed to illustrate how simple geometric rules can create complex, natural- looking forms. Key pararmeters including branch length, angular divergence, and recursion depth will be varied to explore the effects on the tree's overall shape. This lab reinforces the concept of recusion in computer science and mathematics, while offering a visual interpretation of fractal behavior as seen in nature. 
+      </section>
+
+    </p>
+  </div>
+
+  <nav role="navigation" class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#methods">Methods / Algorithm</a></li>
+      <li><a href="#results">Results &amp; Analysis</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <article class="indent-pars">
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          Fractals are geometric figures characterized by self- simularity and infinite complexity. They occur frequently in nature such as in plant growth patterns, mountain ranges, river networks, and weather systems. The purpose of this lab is to model a specific class of fractals known as binary fractal trees. We will do this by using recursive programming and turtle graphics in Python. The primary objective is to develop a visual understanding of recursion and its applications in fractal geometry. By constructing a branching structure where each branch recursively splits into two smaller branches, we simulate the recursive nature of many naturally occuring systems. This lab also provides an opportunity to examine how changes in recursion depth, branch angle, and reduction ratio influence the resulting geometry. 
+      <section id="background">
+        <h2>Background</h2>
+        <p>
+         Fractals are mathematical sets that exhibit a repeating pattern at every scale and are often described as infinitely complex. A fundamental property of fractals is self- similarity, meaning parts of the structure resemble the whole. In computer science, fractals are frequently generated using recursive algorithms, where a function calls itself to repeat a pattern at smaller and smaller scales. One classic example of a fractal is the fractal tree, which visually mimics the way tree branches subdivide. This structure can be constructed using turtle graphics- a Python library used for vector drawing based on a cursor that can move and draw lines on a canvas. By recursively reducing the branch length and altering turning angles, the turtle draws complex structures that demonstrate fractal behavior. This lab gives a hands on approach to learn how the power of recursion is simulating real- world occurences and provides a visual medium for understanding mathematical abstraction. 
+        </p>
+      </section>
+
+      <section id="methods">
+        <h2>Methods / Algorithm</h2>
+        <p>
+         First, we will look at a function that draws a binary fractal tree, where each branch splits into two smaller branches, and the process repeats. This code creates a symmetrical, tree-like pattern with branching angles.
+        </p>
+
+        <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+import random
+
+# Function to draw a fractal tree using recursion
+def fractal_tree(length, depth):
+    if depth == 0:
+        return
+    else:
+
+        forward(length)
+        left(30)
+
+        fractal_tree(length * 0.7, depth - 1)
+
+        right(60)
+
+        fractal_tree(length * 0.7, depth - 1)
+
+        left(30)
+        backward(length)
+
+</code></pre>
+
+        <p> Now we will set up the environment and execute the fractal_ tree function that we defined previously using a custom turtle graphics environment to create and display a recursive fractal tree.  </p>
+        <pre><code class="language-python">
+          
+ # Initialize the turtle
+initializeTurtle(initial_window_size=(500, 500))
+
+# Set up the turtle's starting position and orientation
+jump(250, 450)  # Starting position at the bottom center of the canvas
+face(0)
+color('green')  # Set the pen color
+
+# Set the length and depth for the fractal tree
+length = 100  # Initial length of the main trunk
+depth = 7     # Recursion depth (number of branching levels)
+
+# Draw the fractal tree
+fractal_tree(length, depth)
+
+# Display the drawing
+show()
+
+</code></pre>
+             <p> Now, we will create a function that will draw a binary- style fractal tree in which each branch splits into two smaller branches at an angle, recursively. Unlike the fractal tree function, the build tree function offers greater control over the tree's appearance, allowing for asymmetrical or varied structures by adjusting certain features.  </p>
+        <pre><code class="language-python">
+   # Define the fractal tree function
+def build_tree(branch_length, shorten_by, angle):
+    if branch_length > 3:
+
+        forward(branch_length)
+
+        new_length = branch_length - shorten_by
+
+        left(angle)
+
+        build_tree(new_length, shorten_by, angle)
+
+        right(angle * 2)
+
+        build_tree(new_length, shorten_by, angle)
+
+        left(angle)
+
+        backward(branch_length)
+
+</code></pre>
+         <p> Lastly, we create the code that initializes the turtle and actually executes the build tree function, which outputs a green fractal tree centered at the bottom of the canvas, expanding upwards and outwards.  </p>
+        <pre><code class="language-python">
+          
+  # Initialize the turtle
+initializeTurtle(initial_window_size=(800, 800))
+
+# Set up the turtle's starting position and orientation
+jump(400, 600)  # Starting position at the bottom center of the canvas
+face(0)
+color('green')  # Set the pen color
+
+# Draw the fractal tree
+build_tree(80, 8, 25)
+
+# Display the drawing
+show()
+
+</code></pre>
+    
+      </section>
+
+      <section id="results">
+        <h2>Results &amp; Analysis</h2>
+        <p> In the first and second chunks of code, we create a function that draws a fractal tree using recursion. Let's look at the results! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal tree.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Fractal Tree</figcaption>
+        </figure>
+        <p> Then, we created a fractal tree function that builds a fractal tree using recursion and parameters. Let's look at the tree! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/build tree.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption> </figcaption>
+        </figure>
+      </section>
+    </article>
+  </main>
+
+        
+      </section>
+
+      <!-- Modifications -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="modifications">
+
+        <h2>Modifications</h2>
+        <p>
+         Now, we can modify and add some code that will use this function to create a tree with flower buds on it. We can do this by defining a function to draw a simple flower and then input this function into the build tree function! Let's look at the results!
+        </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/flowertree.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption> Fractal Tree With Flowers </figcaption>
+        </figure>
+        <p> We can also create a fractal tree of a different color, add a background color, and change the length and depth of the tree.  </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/2ndfractaltree.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption> Colorful Fractal Tree </figcaption>
+        </figure>
+        <p> We can also create a seasonal looking tree by changing the color of the tree and the parameters of the tree.</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fall tree.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Halloween Tree </figcaption>
+        </figure>
+      </section>
+
+      <!-- CONCLUSION SECTION -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p> Throughout this lab, we manipulated key parameters such as branch length, angle, and recursion depth to investigate their effects on the overall shape and complexity of the fractal trees. The introduction of flower patterns at the tips of the branches enhanced the visual appeal, demonstrating the versatility of recursive algorithms in creating intricate designs. Additionally, experiementing with different colors and backgrounds allowed for the simulation of seasonal variations, further enriching the visual representation. This hands- on experience reinforced the concept of recursion in computer science, highlighting its utility in modeling natural phenomena. This lab provided practical insights into the power of recursive algorithms in generating fractal structures. The iterative process of adjusting parameters and observing the resulting changes deepened our understanding of how fractal geometry applies to real- world occurrences. In summary, this lab effectively demonstrated the application of recursion in generating fractal trees, offering a visual and interactive means to comprehend the principles of fractal geometry. The experiment showcased how simple recursive rules can lead to the emergence of complex, self-similar patterns, mirroring the intricate structures found in nature, such as trees.   </p>        
+      </section>
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
