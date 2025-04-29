@@ -137,47 +137,51 @@ plt.title("Mandelbrot Set - Zoomed In")
 plt.show()
 
 </code></pre>
-             <p> Now, we will create a function that will draw a binary- style fractal tree in which each branch splits into two smaller branches at an angle, recursively. Unlike the fractal tree function, the build tree function offers greater control over the tree's appearance, allowing for asymmetrical or varied structures by adjusting certain features.  </p>
+             <p> Lastly, we will look at the code that generates and visualizes a Julia Set, which is a type of fractal derived from a fixed complex parameter c. Unlike the Mandelbrot set where c varies and z is fixed, the Julia set holds c constant and iterates over various initial z values. The function julia_set uses a compiled function to optimize performance. For each point z in a 2D grid on the complex plane, the function interatively applies the formula and counts how many iterations z takes to exceed a magnitude of 2. The function then outputs a 2D array where each value represents escape time, used to color the point. The Julia set is generated for a constant c value and the structure of this set depends heavily on this value- different values produce drastically different patterns.   </p>
         <pre><code class="language-python">
-   # Define the fractal tree function
-def build_tree(branch_length, shorten_by, angle):
-    if branch_length > 3:
+   import numpy as np
+import matplotlib.pyplot as plt
+from numba import jit
 
-        forward(branch_length)
+# JIT-optimized function to generate the Julia Set
+@jit(nopython=True)
+def julia_set(c, xmin, xmax, ymin, ymax, width, height, max_iter):
+    r1 = np.linspace(xmin, xmax, width)
+    r2 = np.linspace(ymin, ymax, height)
+    n3 = np.empty((width, height))
 
-        new_length = branch_length - shorten_by
+    for i in range(width):
+        for j in range(height):
+            z = r1[i] + 1j * r2[j]
+            n = 0
+            while abs(z) <= 2 and n < max_iter:
+                z = z*z + c
+                n += 1
+            n3[i, j] = n
 
-        left(angle)
+    return n3
 
-        build_tree(new_length, shorten_by, angle)
+# Parameters for the plot
+xmin, xmax, ymin, ymax = -1.5, 1.5, -1.5, 1.5
+width, height = 800, 800  # Image resolution
+max_iter = 256  # Number of iterations for accuracy
 
-        right(angle * 2)
+# Choose a value for the complex constant c
+c = complex(-0.8, 0.156)
 
-        build_tree(new_length, shorten_by, angle)
+# Generate the Julia Set
+n3 = julia_set(c, xmin, xmax, ymin, ymax, width, height, max_iter)
 
-        left(angle)
+# Plotting the Julia Set
+plt.figure(figsize=(10, 10))
+plt.imshow(n3.T, extent=[xmin, xmax, ymin, ymax], cmap='hot', interpolation='bilinear')
+plt.colorbar()
+plt.title(f"Julia Set for c = {c}")
+plt.show()
 
-        backward(branch_length)
 
 </code></pre>
-         <p> Lastly, we create the code that initializes the turtle and actually executes the build tree function, which outputs a green fractal tree centered at the bottom of the canvas, expanding upwards and outwards.  </p>
-        <pre><code class="language-python">
-          
-  # Initialize the turtle
-initializeTurtle(initial_window_size=(800, 800))
-
-# Set up the turtle's starting position and orientation
-jump(400, 600)  # Starting position at the bottom center of the canvas
-face(0)
-color('green')  # Set the pen color
-
-# Draw the fractal tree
-build_tree(80, 8, 25)
-
-# Display the drawing
-show()
-
-</code></pre>
+         
     
       </section>
 
