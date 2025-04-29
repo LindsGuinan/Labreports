@@ -20,17 +20,17 @@
 <body id="top">
 
   <header>
-    <h1>Fractal Geometry Lab Report 4</h1>
+    <h1>Fractal Geometry Lab Report 7 & 8</h1>
     <p class="author">
       Lindsey Guinan <br />
-      March 17, 2025
+      April 17, 2025
     </p>
   </header>
   
   <div class="abstract">
     <h2>Abstract</h2>
     <p>
-       This lab explores the mathematical foundation and visual representations of fractal geometry through the implementation of recursive algorithms in Python. Specifically, this lab focuses on generating fractal trees using turtle graphics to simulate self- similar, branching structures. Two recursive functions were developed to illustrate how simple geometric rules can create complex, natural- looking forms. Key pararmeters including branch length, angular divergence, and recursion depth will be varied to explore the effects on the tree's overall shape. This lab reinforces the concept of recusion in computer science and mathematics, while offering a visual interpretation of fractal behavior as seen in nature. 
+       In this lab, we will explore fractal geometry through the exploration and visualization of the Mandelbrot and Julia sets, two fundamental constructs in complex dynamics. By using Python, NumPy, Matplotlib, and Numba, we will generate high0 resolution visualizations of these fractals. The lab will involve zooming into intricate regions of the Mandelbrot set  and observing how different complex constants affect the structure of the Julia set. We will also explore enhancements using color maps and lay the foundation for future extensions like animation. These visual experiements reveal the complexity and self-similarity characteristic of fractals, reinforcing their mathematical beauty and computational richness. 
       </section>
 
     </p>
@@ -53,11 +53,11 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          Fractals are geometric figures characterized by self- simularity and infinite complexity. They occur frequently in nature such as in plant growth patterns, mountain ranges, river networks, and weather systems. The purpose of this lab is to model a specific class of fractals known as binary fractal trees. We will do this by using recursive programming and turtle graphics in Python. The primary objective is to develop a visual understanding of recursion and its applications in fractal geometry. By constructing a branching structure where each branch recursively splits into two smaller branches, we simulate the recursive nature of many naturally occuring systems. This lab also provides an opportunity to examine how changes in recursion depth, branch angle, and reduction ratio influence the resulting geometry. 
+         Fractals are infinitely complex patterns that exhibit self-similarity across different scales. They are not only visually striking but also deeply connected to chaos theory, nonlinear dynamics, and complex analysis. In this lab, we focus on two prominent fractals: the Mandelbrot set and the Julia set. Both emerge from the iteration of simple complex functions and provide insight into the behavior of dynamical systems. Using Python and optimized numerical libraries, we implement algorithms to compute and visualize these sets. We will examine how changing the region of the complex plane (zooming) and modifying the iterative function's constant affects the output. Additionally, visualization techniques like varying colormaps are used to enhance interpretation and asethetics. The lab ultimately combines mathematical theory, computational methods, and visual analysis to explore the depth and beauty of fractals. 
       <section id="background">
         <h2>Background</h2>
         <p>
-         Fractals are mathematical sets that exhibit a repeating pattern at every scale and are often described as infinitely complex. A fundamental property of fractals is self- similarity, meaning parts of the structure resemble the whole. In computer science, fractals are frequently generated using recursive algorithms, where a function calls itself to repeat a pattern at smaller and smaller scales. One classic example of a fractal is the fractal tree, which visually mimics the way tree branches subdivide. This structure can be constructed using turtle graphics- a Python library used for vector drawing based on a cursor that can move and draw lines on a canvas. By recursively reducing the branch length and altering turning angles, the turtle draws complex structures that demonstrate fractal behavior. This lab gives a hands on approach to learn how the power of recursion is simulating real- world occurences and provides a visual medium for understanding mathematical abstraction. 
+         The Mandelbrot and Julia sets are based on iterating a simple complex function where z is a complex number representing a point on the complex plane and c is a constant complex parameter. In the Mandelbrot set, with fix z equal to zero and vary c. For each c, we track whether the sequence remains bounded or diverges. The Mandelbrot set is the collection of all such c values for which the sequence does not escape to infinity. Its boundary exhibits intricate, infinitely detailed structure, often explored through zooming. In contrast, the Julia set fixes the value of c and varies the initial z. This creates a complex and often fragmented image where each point's color reflects how quickly its orbit diverges. Depending on the choice of the c, the Julia set can be connected or completely dissconnected (dust). In this lab, we will use NumPy, Numba, and Matplotlib. Together, these will allow us to efficiently explore fractals in high detail, experiement with parameters, and appreciate their mathematical and visual complexity. 
         </p>
       </section>
 
