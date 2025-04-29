@@ -64,52 +64,77 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         First, we will look at a function that draws a binary fractal tree, where each branch splits into two smaller branches, and the process repeats. This code creates a symmetrical, tree-like pattern with branching angles.
-        </p>
+         First, we will look at the first chunk of code in Module 7. This code generates and visualizes the Mandelbrot Set, a famous fractal in complex dynamics. It uses numerical and plotting libraries and optimizes performance with Numba. The mandelbrot() function determines how many iterations a complex number c takes before the recursive formual defined escapes a radius of 2, up to a maximum number of iterations. The output value represents the "escape time" and is used for coloring. The mandelbrot_set() function generates a grid of complex numbers across a defined section of the complex plane and applies the mandelbrot() function to each point. The result is a 2D array of iteration counts, which forms the fractal image. Then we generate the fractal- the first call to mandelbrot_set() computes the full mandelbrot set and the second call zooms into a small region with more iterations for higher detail. Then the results are visualized. The 2D array is displayed using plt.imshow() with the "hot" colormap. A colorbar indicates escape times, and the plot is titled appropriately. 
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
-import random
+import numpy as np
+import matplotlib.pyplot as plt
+from numba import jit
 
-# Function to draw a fractal tree using recursion
-def fractal_tree(length, depth):
-    if depth == 0:
-        return
-    else:
+# JIT-optimized mandelbrot function
+@jit(nopython=True)
+def mandelbrot(c, max_iter):
+    z = 0
+    n = 0
+    while abs(z) <= 2 and n < max_iter:
+        z = z*z + c
+        n += 1
+    return n
 
-        forward(length)
-        left(30)
+# JIT-optimized mandelbrot set generator
+@jit(nopython=True)
+def mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter):
+    r1 = np.linspace(xmin, xmax, width)
+    r2 = np.linspace(ymin, ymax, height)
+    n3 = np.empty((width, height))
 
-        fractal_tree(length * 0.7, depth - 1)
+    for i in range(width):
+        for j in range(height):
+            n3[i, j] = mandelbrot(r1[i] + 1j * r2[j], max_iter)
 
-        right(60)
+    return n3
 
-        fractal_tree(length * 0.7, depth - 1)
+# Parameters for the plot
+xmin, xmax, ymin, ymax = -2.0, 1.0, -1.5, 1.5
+width, height = 800, 800
+max_iter = 100
 
-        left(30)
-        backward(length)
+# Generate the Mandelbrot Set
+n3 = mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter)
+# Parameters for the initial zoom level
+xmin, xmax, ymin, ymax = -0.75, -0.74, 0.1, 0.11  # Zoom into this specific area
+width, height = 800, 800  # Resolution of the image
+max_iter = 1000  # Number of iterations
+
+# Generate the Mandelbrot Set with zoom
+n3 = mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter)
+
+# Plotting the zoomed Mandelbrot Set
+plt.figure(figsize=(10, 10))
+plt.imshow(n3.T, extent=[xmin, xmax, ymin, ymax], cmap='hot')
+plt.colorbar()
+plt.title("Mandelbrot Set - Zoomed In")
+plt.show()
 
 </code></pre>
 
-        <p> Now we will set up the environment and execute the fractal_ tree function that we defined previously using a custom turtle graphics environment to create and display a recursive fractal tree.  </p>
+        <p> Now we can look at the code that generates a high- resolution zoomed-in view of a specific region of the Mandelbrot Set. This is done by zooming in on the defined region, the image resolution is set to high resolution for clarity and ensures finer details by allowing more iteration, and then the function is called with these parameters to compute the iteration counts across the zoomed region. The result is then plotted and the "hot" colormap gives a fiery gradient, enhancing contrast between the regions that escape quickly and those that remain bounded.   </p>
         <pre><code class="language-python">
-          
- # Initialize the turtle
-initializeTurtle(initial_window_size=(500, 500))
+        
+# Parameters for the initial zoom level
+xmin, xmax, ymin, ymax = -0.75, -0.74, 0.1, 0.11  # Zoom into this specific area
+width, height = 800, 800  # Resolution of the image
+max_iter = 1000  # Number of iterations
 
-# Set up the turtle's starting position and orientation
-jump(250, 450)  # Starting position at the bottom center of the canvas
-face(0)
-color('green')  # Set the pen color
+# Generate the Mandelbrot Set with zoom
+n3 = mandelbrot_set(xmin, xmax, ymin, ymax, width, height, max_iter)
 
-# Set the length and depth for the fractal tree
-length = 100  # Initial length of the main trunk
-depth = 7     # Recursion depth (number of branching levels)
-
-# Draw the fractal tree
-fractal_tree(length, depth)
-
-# Display the drawing
-show()
+# Plotting the zoomed Mandelbrot Set
+plt.figure(figsize=(10, 10))
+plt.imshow(n3.T, extent=[xmin, xmax, ymin, ymax], cmap='hot')
+plt.colorbar()
+plt.title("Mandelbrot Set - Zoomed In")
+plt.show()
 
 </code></pre>
              <p> Now, we will create a function that will draw a binary- style fractal tree in which each branch splits into two smaller branches at an angle, recursively. Unlike the fractal tree function, the build tree function offers greater control over the tree's appearance, allowing for asymmetrical or varied structures by adjusting certain features.  </p>
