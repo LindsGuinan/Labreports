@@ -137,7 +137,7 @@ plt.title("Mandelbrot Set - Zoomed In")
 plt.show()
 
 </code></pre>
-             <p> Lastly, we will look at the code that generates and visualizes a Julia Set, which is a type of fractal derived from a fixed complex parameter c. Unlike the Mandelbrot set where c varies and z is fixed, the Julia set holds c constant and iterates over various initial z values. The function julia_set uses a compiled function to optimize performance. For each point z in a 2D grid on the complex plane, the function interatively applies the formula and counts how many iterations z takes to exceed a magnitude of 2. The function then outputs a 2D array where each value represents escape time, used to color the point. The Julia set is generated for a constant c value and the structure of this set depends heavily on this value- different values produce drastically different patterns.   </p>
+             <p> Lastly, we will move on to module 8. We will look at the code that generates and visualizes a Julia Set, which is a type of fractal derived from a fixed complex parameter c. Unlike the Mandelbrot set where c varies and z is fixed, the Julia set holds c constant and iterates over various initial z values. The function julia_set uses a compiled function to optimize performance. For each point z in a 2D grid on the complex plane, the function interatively applies the formula and counts how many iterations z takes to exceed a magnitude of 2. The function then outputs a 2D array where each value represents escape time, used to color the point. The Julia set is generated for a constant c value and the structure of this set depends heavily on this value- different values produce drastically different patterns.   </p>
         <pre><code class="language-python">
    import numpy as np
 import matplotlib.pyplot as plt
@@ -187,15 +187,15 @@ plt.show()
 
       <section id="results">
         <h2>Results &amp; Analysis</h2>
-        <p> In the first and second chunks of code, we create a function that draws a fractal tree using recursion. Let's look at the results! </p>
+        <p> First let's look at the results of the mandelbrot Set! </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal tree.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
-          <figcaption>Fractal Tree</figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/mandelbrot.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Mandelbrot Set</figcaption>
         </figure>
-        <p> Then, we created a fractal tree function that builds a fractal tree using recursion and parameters. Let's look at the tree! </p>
+        <p> Now, let's loook at the results of the Julia Set! </p>
         <figure>
-          <img src="https://github.com/LindsGuinan/Labreports/blob/main/build tree.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
-          <figcaption> </figcaption>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/julia.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Julia Set </figcaption>
         </figure>
       </section>
     </article>
