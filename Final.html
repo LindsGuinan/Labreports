@@ -1,1 +1,312 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Template for Fractal Geometry Computational Lab Reports" />
+  <link rel="stylesheet" href="https://latex.vercel.app/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      }
+    };
+  </script>
+  <title>Fractal Geometry Lab Report</title> 
+</head>
+<body id="top">
+
+  <header>
+    <h1>Fractal Geometry Lab Report 3</h1>
+    <p class="author">
+      Lindsey Guinan <br />
+      Feburary 26, 2025
+    </p>
+  </header>
+  
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <p>
+       This lab explores the concepts of fractals and cellular automata by implementing the Sierpinski triangle and simulating various cellular automata rules. The Sierpinski triangle, a well-known fractal, is generated recursively using Turtle graphics, demonstrating the self-similarity and recursive nature of fractals. Additionally, the lab investigates the behavior of cellular automata, specifically focusing on Rule 90 and other rules like Rule 30, Rule 62, Rule 110, and Rule 126, applied to a 2D grid. The resulting patterns were visualized using NumPy and Matplotlib. Through this experiment, we observe the emergence of complex patterns from simple rules and gain insights into the fundamental principles of fractals and automata.
+      </section>
+
+    </p>
+  </div>
+
+  <nav role="navigation" class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#methods">Methods / Algorithm</a></li>
+      <li><a href="#results">Results &amp; Analysis</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <article class="indent-pars">
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          Fractal geometry studies shapes and patterns that exhibit self-similarity at different scales, meaning the structure of the whole is repeated in parts. One classic example of such self-similarity is the Sierpinski triangle, a fractal that can be constructed by recursively subdividing an equilateral triangle into smaller equilateral triangles, removing the central triangle at each iteration. This process illustrates the concept of recursion, where a geometric shape is repeatedly divided into similar smaller parts. In addition to fractals, cellular automata (CA) are mathematical models that evolve based on local interaction rules. These systems are discrete in time and space, where each cell in a grid changes state based on the states of its neighboring cells. Cellular automata have applications in various fields, including physics, biology, and computer science, as they can model complex, emergent behaviors from simple local rules. In this lab, we utilize the Turtle Graphics library to draw the Sierpinski triangle and apply cellular automaton rules, specifically Rule 90, which generates fractal-like patterns in a 1D grid. We also explore the behavior of several other cellular automaton rules, such as Rule 30, Rule 62, Rule 110, and Rule 126, and visualize the patterns they produce on a 2D grid using NumPy and Matplotlib.
+      <section id="background">
+        <h2>Background</h2>
+        <p>
+         Fractals are geometric shapes that are self-similar at various levels of magnification. This self-similarity means that smaller portions of the shape resemble the whole. The Sierpinski triangle is one of the most famous fractals, constructed through a recursive process. It begins with an equilateral triangle and recursively removes the central triangle from each resulting smaller triangle. This process, when repeated infinitely, results in a shape with intricate, repeating patterns that are similar at every scale. The Sierpinski triangle is a visual representation of recursive iteration, where each iteration follows a simple rule that generates a smaller version of the initial shape. In this lab, we use Turtle graphics, a Python module for drawing shapes, to visualize the process of generating the Sierpinski triangle. The recursive nature of the algorithm highlights the fundamental property of fractals: self-similarity. Cellular automata (CA) are mathematical models that simulate how a grid of cells evolves over discrete time steps based on local rules. Each cell can be in one of a finite number of states, and the state of each cell is updated based on the states of its neighbors. Cellular automata have been used to model a wide range of phenomena, from biological processes like the growth of plants to physical systems like fluid dynamics.
+        </p>
+      </section>
+
+      <section id="methods">
+        <h2>Methods / Algorithm</h2>
+        <p>
+         First, we will look at the code that tells the turtle to draw an equilateral triangle. 
+        </p>
+
+        <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
+import random
+
+# Define the function to draw an equilateral triangle
+def draw_triangle(length):
+    for _ in range(3):
+        forward(length)
+        left(120)
+
+</code></pre>
+
+        <p> Now we can define a recursive function to draw a sierpinski triangle, which is a fractal pattern made up of smaller equilateral triangles. </p>
+        <pre><code class="language-python">
+   # Define the recursive Sierpinski triangle function
+def sierpinski_triangle(length, order):
+    if order == 0:
+        draw_triangle(length)
+    else:
+        sierpinski_triangle(length / 2, order - 1)
+        forward(length / 2)
+        sierpinski_triangle(length / 2, order - 1)
+        backward(length / 2)
+        left(60)
+        forward(length / 2)
+        right(60)
+        sierpinski_triangle(length / 2, order - 1)
+        left(60)
+        backward(length / 2)
+        right(60)
+
+</code></pre>
+             <p> Now we will use the function we just made to draw the a sierpinski triangle fractal with an initial side length of 400 and of order 4. </p>
+        <pre><code class="language-python">
+   initializeTurtle()
+showturtle()
+
+# Set up the turtle
+jump(300, 500)
+face(90)
+color('green')
+
+# Draw the Sierpinski triangle
+length = 400
+order = 4
+sierpinski_triangle(length, order)
+
+show()
+
+</code></pre>
+         <p>Next, we will introduce the code for the cellular automata. In this chunk of code, we will import NumPy and Matplotlib and define a function plot(x) for visualizing a 2d array. We will then generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. The plot(C) function then visualizes this grid as a grayscale image using matplotlib. After this, we have a code that takes an integer value 90 and converts it into an 8-bit binary representation using Python's string syntax. </p>
+        <pre><code class="language-python">
+      import numpy as np
+import matplotlib.pyplot as plt
+#visualizing a 2d array
+def plot(x):
+    fig, ax = plt.subplots()
+    im = ax.imshow(x, cmap = 'gray')
+    ax.axis('off')
+    fig.set_size_inches(10, 10)
+    plt.show()
+#generate a 100x100 grid of zeros 
+    C = np.zeros((100,100)).astype(int)
+C[0,50] = 1
+plot(C)
+#converting integer number 90 into an 8- bit binary representation 
+    num = 90
+print(f'{num:08b}')
+
+</code></pre>
+         <p>Now, we can create and modify a 3D array called rule. This array represents a rule table for a cellular automaton, where each 3D index corresponds to a combination of neighboring cells and the rule specifies what the central cell should be based on its neighboring cells. This rule can be used in the cellular automaton algorithm to determine the next state of a grid based on the surrounding states.  </p>
+        <pre><code class="language-python">
+   rule = np.zeros((2,2,2))
+
+rule[0,0,0] = 0
+rule[0,0,1] = 1
+rule[0,1,0] = 0
+rule[0,1,1] = 1
+rule[1,0,0] = 1
+rule[1,0,1] = 0
+rule[1,1,0] = 1
+rule[1,1,1] = 0
+
+</code></pre>
+       <p> Using this new rule, we can now create a function that applies a 1D cellular automation rule (like rule 90, rule 30, etc.) to each row  based on the previous row's value. This is a common method used for generating patterns and fractals in cellular automata. The rule table defines how a new cell state is determined from its three upper neighborhoods. We can then generate and display a visual pattern based on the cellular automaton rule applied to the grid C, which was previously defined.    </p>
+        <pre><code class="language-python">
+    #Define the function 
+    def CA(X):
+
+    for i in range(1,X.shape[0]-1): #row
+        for j in range(1,X.shape[1]-1): #col
+
+            N  = X[i-1,j]
+            NW = X[i-1,j-1]
+            NE = X[i-1,j+1]
+
+            X[i,j] = rule[NW,N,NE]
+
+    return X
+    #Create visual pattern
+    plot(CA(C))
+</code></pre>
+        <p> Finally, we can create a chunck of code that applies the rule 90 to a 2D grid, uses the three upper neighbors to compute the next state of each cell, generates a fractal pattern called the sierpinski triangle, and displays the structure using plot. Lastly, we can run multiple cellular automaton simulations using different rules. This will generate and display a visualization of the evolving patterns for each rule and gives us insight on how different rules affect pattern formation in cellular automata, which reveals complex behaviors for simple rules.     </p>
+        <pre><code class="language-python">
+   #Function for generating fractal pattern       
+   def CA(X):
+
+    for i in range(1,X.shape[0]-1): #row
+        for j in range(1,X.shape[1]-1): #col
+
+            X[i,j] = (rule/(2**(4*X[i-1,j-1] + 2*X[i-1,j] + X[i-1,j+1]))) % 2
+
+    return X
+
+rule = 90
+
+plot(CA(C))
+
+#Rule for running multiple cellular automaton simulations using different rules
+  for rule in [30, 62, 90, 110, 126]:
+    plot(CA(C))
+</code></pre>
+    
+      </section>
+
+      <section id="results">
+        <h2>Results &amp; Analysis</h2>
+        <p>In the first chunk of code, we define a function to draw an equilateral triangle. This function is then used to tell the turtle to draw an equilateral triangle. Let's look at the results!  </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle.png?raw=true" alt="Fractal Example" width="600" height="400" loading="lazy" />
+          <figcaption>Drawing of Equilateral Triangle</figcaption>
+        </figure>
+        <p> Next, we define a recursive Sierpinski triangle function and then initialize the turtle to draw this triangle based on the recursive function. </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle2.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>The Sierpinski Triangle </figcaption>
+        </figure>
+         </figure>
+        <p> Now, we will enter the topic of cellular automata where we define a function plot(x) for visualizing a 2D array. We will generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/pixel.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automata Grid </figcaption>
+        </figure>
+         <p> We then define a rule and use that rule to define the function that applies a 1D cellular automaton rule to each row based on the previous row's value.</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/fractal.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Fractal Generated by Using Cellular Automata </figcaption>
+        </figure>
+          <p> When we apply rule 90 to a 2D grid we can see the resulting Sierpinski triangle! </p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/triangle3.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Sierpinski Triangle </figcaption>
+        </figure>
+            <p> Lastly, we can see the results of different rules. First, let's look at the result of using rule 30. Rule 30 generates a chaotic pattern which can be used in randomness and cryptography.</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule30.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 30  </figcaption>
+        </figure>
+          <p> Rule 62 generates a complex asymmetric pattern</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule62.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 62 </figcaption>
+        </figure>
+         <p> Rule 90 generates a Sierpinski Triangle</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule 90.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 90 </figcaption>
+        </figure>
+        <p> Rule 110 is capable of universal computation</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule110.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 110 </figcaption>
+        </figure>
+        <p> Rule 126 produces a fractal- like structure</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule126.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 126 </figcaption>
+        </figure>
+      </section>
+    </article>
+  </main>
+
+
+        
+      </section>
+
+      <!-- Modifications -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="modifications">
+
+        <h2>Modifications</h2>
+        <p>
+         Now, let's do some modifications and see how changing the rule and color affects the pattern of the fractal! 
+        </p>
+        <p> Let's try rule 52!</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule52.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 52 </figcaption>
+        </figure>
+        <p> Let's try rule 45!</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule45.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 45 </figcaption>
+        </figure>
+        <p> Let's try rule 21!</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule21.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 21 </figcaption>
+        </figure>
+        <p> Let's try rule 101!</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule101.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 101 </figcaption>
+        </figure>
+         <p> Let's try rule 150!</p>
+        <figure>
+          <img src="https://github.com/LindsGuinan/Labreports/blob/main/rule150.png?raw=true" alt="Square Drawing" width="600" height="400" loading="lazy" />
+          <figcaption>Cellular Automaton Using Rule 150 </figcaption>
+        </figure>
+      </section>
+
+      <!-- CONCLUSION SECTION -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>In this lab, we explored fractal geometry and cellular automata through computational simulations. Our primary focus was on generating the Sierpinski Triangle, a well-known fractal, and experimenting with elementary cellular automata to observe how different rule sets influence pattern formation. We first implemented a recursive algorithm to generate the Sierpinski Triangle using the Turtle graphics library. By breaking down a large equilateral triangle into smaller self-similar triangles, we observed the fundamental property of fractals: self-similarity at different scales. Increasing the recursion depth allowed us to see finer details in the fractal structure. We then shifted to cellular automata, where we represented a simple one-dimensional system using a binary grid. The rules governing the automaton determined how each cell evolved based on its neighbors. By manipulating these rules we saw how different rule sets created vastly different patterns—ranging from highly structured, fractal-like formations to chaotic, random-looking structures. Some rules (like Rule 90) naturally formed fractal patterns, while others (like Rule 45) resulted in chaotic behavior, highlighting the connection between deterministic rules and emergent order. This lab illustrated how mathematical structures can emerge from simple, recursive rules. Fractals and cellular automata reveal how complexity can arise from simplicity, a concept that is widely applicable in science, technology, and nature. </p>        
+      </section>
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
