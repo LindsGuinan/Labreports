@@ -65,7 +65,7 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         Part 1 is the Chaos Game. First we will generate the code that uses the Chaos game algorithm to generate the Sierpinski Triangle, which is a classic example of a fractal. The first part of the code is the setup, which defines three vertices of an equilateral triangle and initializes a large number of iterations. The x and y coordinates of the points are then stored in an array. The second part of this code randomly chooses an initial point within the triangle, and then we then enter the Chaos Game Loop. In the Chaos Game Loop, for each iteration, the algorithm randomly selects one of the triangle's vertices. It then finds the midpoint between that vertex and the last plotted point and this new midpoints becomes the next point to plot. This is then visualized as the code plots all points on a scatter plot. The result is the emergence of the Sierpinski Triangle, which we have studied before. 
+         Part 1 of the final is called the Chaos Game. First we will generate the code that uses the Chaos game algorithm to generate the Sierpinski Triangle, which is a classic example of a fractal. The first part of the code is the setup, which defines three vertices of an equilateral triangle and initializes a large number of iterations. The x and y coordinates of the points are then stored in an array. The second part of this code randomly chooses an initial point within the triangle, and then we then enter the Chaos Game Loop. In the Chaos Game Loop, for each iteration, the algorithm randomly selects one of the triangle's vertices. It then finds the midpoint between that vertex and the last plotted point and this new midpoints becomes the next point to plot. This is then visualized as the code plots all points on a scatter plot. The result is the emergence of the Sierpinski Triangle, which we have studied before. 
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
@@ -157,7 +157,7 @@ plt.show()
 
 
 </code></pre>
-             <p> Part 2 is called L-Systems. We will now look at the code that uses an L-System with turtal graphics to draw a fractal tree. It works by first initializing the turtle graphics environment. Then the L-System is generated and defined with an axiom ('F') and a rewrite rule. This rule recursively replaces every 'F' with a longer string over 4 iterations, generating a complex command string. The draw_lsystem function interprets the generated string using turtle commands. The turtle starts at a specified location and draws the structure using green color, step size, and angle. The final drawing is a recursive, self-similar tree structure that mimics the branching patterns of natural trees.    </p>
+             <p> Part 2 of this final is called L-Systems. We will now look at the code that uses an L-System with turtal graphics to draw a fractal tree. It works by first initializing the turtle graphics environment. Then the L-System is generated and defined with an axiom ('F') and a rewrite rule. This rule recursively replaces every 'F' with a longer string over 4 iterations, generating a complex command string. The draw_lsystem function interprets the generated string using turtle commands. The turtle starts at a specified location and draws the structure using green color, step size, and angle. The final drawing is a recursive, self-similar tree structure that mimics the branching patterns of natural trees.    </p>
         <pre><code class="language-python">
  # Initialize the turtle
 initializeTurtle()
@@ -217,79 +217,71 @@ show()
 
 
 </code></pre>
-         <p>Next, we will introduce the code for the cellular automata. In this chunk of code, we will import NumPy and Matplotlib and define a function plot(x) for visualizing a 2d array. We will then generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. The plot(C) function then visualizes this grid as a grayscale image using matplotlib. After this, we have a code that takes an integer value 90 and converts it into an 8-bit binary representation using Python's string syntax. </p>
+         <p>The third part of this final is called the Hilbert Curve. This code generates and draws a Hilbert Curve, a type of space-filling fractal, using an L-System and turtle graphics. This code works by first initializing the turtle graphics environemnt to enable line drawing on a canvas. The L-System is then generated- the Hilbert Curve is defined by the axiom 'L' and two rules. Over multiple iterations, the axiom string is expanded into a long command string that encodes the path of the Hilbert Curve. The draw_lsystem function interprets each character and then the step size is calculated so the entire curve fits in a 400- unit square. The turtle starts from a specific position and orientation to ensure proper placement on the canvas. The turtle draws a 5th- order Hilbert Curve, which intricately fills a square space without overlapping, demonstrating the curve's recursive and space-filling properties.  </p>
         <pre><code class="language-python">
-      import numpy as np
-import matplotlib.pyplot as plt
-#visualizing a 2d array
-def plot(x):
-    fig, ax = plt.subplots()
-    im = ax.imshow(x, cmap = 'gray')
-    ax.axis('off')
-    fig.set_size_inches(10, 10)
-    plt.show()
-#generate a 100x100 grid of zeros 
-    C = np.zeros((100,100)).astype(int)
-C[0,50] = 1
-plot(C)
-#converting integer number 90 into an 8- bit binary representation 
-    num = 90
-print(f'{num:08b}')
+     # Import necessary modules
+import math
+
+# Initialize the turtle
+initializeTurtle()
+showturtle()
+
+# Function to apply L-system rules
+def apply_rules(char, rules):
+    return rules.get(char, char)
+
+# Function to generate L-system string
+def generate_lsystem(axiom, rules, iterations):
+    current_string = axiom
+    for _ in range(iterations):
+        next_string = ''.join([apply_rules(char, rules) for char in current_string])
+        current_string = next_string
+    return current_string
+
+# Function to draw the L-system with turtle
+def draw_lsystem(turtle_string, length, angle):
+    for command in turtle_string:
+        if command == 'F':
+            forward(length)
+        elif command == '+':
+            left(angle)
+        elif command == '-':
+            right(angle)
+        # 'L' and 'R' are placeholders; we ignore them in drawing
+        else:
+            pass  # Ignore other characters
+
+# Set the parameters for the Hilbert Curve
+axiom = 'L'
+rules = {
+    'L': '-RF+LFL+FR-',
+    'R': '+LF-RFR-FL+'
+}
+iterations = 5  # Adjust the iterations to change the order (e.g., 1 to 5)
+angle = 90
+
+# Generate the L-system string for the Hilbert curve
+hilbert_string = generate_lsystem(axiom, rules, iterations)
+
+# Calculate the step size based on desired size and iterations
+size = 400  # Total size of the Hilbert curve (adjust as needed)
+n = 2 ** iterations - 1
+length = size / n
+
+# Move to starting position
+jump(400, 500)  # Adjust the starting position to fit your canvas
+face(0)
+color('blue')
+
+# Draw the Hilbert curve
+draw_lsystem(hilbert_string, length, angle)
+
+# Display the drawing
+show()
+
 
 </code></pre>
-         <p>Now, we can create and modify a 3D array called rule. This array represents a rule table for a cellular automaton, where each 3D index corresponds to a combination of neighboring cells and the rule specifies what the central cell should be based on its neighboring cells. This rule can be used in the cellular automaton algorithm to determine the next state of a grid based on the surrounding states.  </p>
-        <pre><code class="language-python">
-   rule = np.zeros((2,2,2))
-
-rule[0,0,0] = 0
-rule[0,0,1] = 1
-rule[0,1,0] = 0
-rule[0,1,1] = 1
-rule[1,0,0] = 1
-rule[1,0,1] = 0
-rule[1,1,0] = 1
-rule[1,1,1] = 0
-
-</code></pre>
-       <p> Using this new rule, we can now create a function that applies a 1D cellular automation rule (like rule 90, rule 30, etc.) to each row  based on the previous row's value. This is a common method used for generating patterns and fractals in cellular automata. The rule table defines how a new cell state is determined from its three upper neighborhoods. We can then generate and display a visual pattern based on the cellular automaton rule applied to the grid C, which was previously defined.    </p>
-        <pre><code class="language-python">
-    #Define the function 
-    def CA(X):
-
-    for i in range(1,X.shape[0]-1): #row
-        for j in range(1,X.shape[1]-1): #col
-
-            N  = X[i-1,j]
-            NW = X[i-1,j-1]
-            NE = X[i-1,j+1]
-
-            X[i,j] = rule[NW,N,NE]
-
-    return X
-    #Create visual pattern
-    plot(CA(C))
-</code></pre>
-        <p> Finally, we can create a chunck of code that applies the rule 90 to a 2D grid, uses the three upper neighbors to compute the next state of each cell, generates a fractal pattern called the sierpinski triangle, and displays the structure using plot. Lastly, we can run multiple cellular automaton simulations using different rules. This will generate and display a visualization of the evolving patterns for each rule and gives us insight on how different rules affect pattern formation in cellular automata, which reveals complex behaviors for simple rules.     </p>
-        <pre><code class="language-python">
-   #Function for generating fractal pattern       
-   def CA(X):
-
-    for i in range(1,X.shape[0]-1): #row
-        for j in range(1,X.shape[1]-1): #col
-
-            X[i,j] = (rule/(2**(4*X[i-1,j-1] + 2*X[i-1,j] + X[i-1,j+1]))) % 2
-
-    return X
-
-rule = 90
-
-plot(CA(C))
-
-#Rule for running multiple cellular automaton simulations using different rules
-  for rule in [30, 62, 90, 110, 126]:
-    plot(CA(C))
-</code></pre>
-    
+       
       </section>
 
       <section id="results">
