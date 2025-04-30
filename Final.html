@@ -65,21 +65,37 @@
       <section id="methods">
         <h2>Methods / Algorithm</h2>
         <p>
-         First, we will look at the code that tells the turtle to draw an equilateral triangle. 
+         Part 1 is the Chaos Game. First we will generate the code that uses the Chaos game algorithm to generate the Sierpinski Triangle, which is a classic example of a fractal. The first part of the code is the setup, which defines three vertices of an equilateral triangle and initializes a large number of iterations. The x and y coordinates of the points are then stored in an array. The second part of this code randomly chooses an initial point within the triangle, and then we then enter the Chaos Game Loop. In the Chaos Game Loop, for each iteration, the algorithm randomly selects one of the triangle's vertices. It then finds the midpoint between that vertex and the last plotted point and this new midpoints becomes the next point to plot. This is then visualized as the code plots all points on a scatter plot. The result is the emergence of the Sierpinski Triangle, which we have studied before. 
         </p>
 
         <pre><code class="language-python">!wget -O turtle_setup.py 'https://raw.githubusercontent.com/williamedwardhahn/fractal25/refs/heads/main/turtle_setup.py'
-import random
+import matplotlib.pyplot as plt
+from random import random, randint
+import numpy as np
 
-# Define the function to draw an equilateral triangle
-def draw_triangle(length):
-    for _ in range(3):
-        forward(length)
-        left(120)
+def midpoint(P, Q):
+    return (0.5*(P[0] + Q[0]), 0.5*(P[1] + Q[1]))
+
+vertices = [(0, 0), (2, 2*np.sqrt(3)), (4, 0)]
+iterates = 50000
+x, y = [0]*iterates, [0]*iterates
+x[0], y[0] = random(), random()
+
+for i in range(1, iterates):
+
+    k = randint(0, 2)
+
+    x[i], y[i] = midpoint( vertices[k], (x[i-1], y[i-1]) )
+
+plt.figure(figsize=(8, 8))
+plt.scatter(x, y, color = 'b', s=0.1)
+plt.title('Sierpinski Triangle Generated Using the Chaos Game')
+plt.axis('equal')  # Ensure aspect ratio is equal for an equilateral triangle
+plt.show()
 
 </code></pre>
 
-        <p> Now we can define a recursive function to draw a sierpinski triangle, which is a fractal pattern made up of smaller equilateral triangles. </p>
+        <p>In the next part of Part 1, we will look at the code that generates the Barnsley Fern, another well-know fractal. We will do this using a method based on iterated function systems.  </p>
         <pre><code class="language-python">
    # Define the recursive Sierpinski triangle function
 def sierpinski_triangle(length, order):
