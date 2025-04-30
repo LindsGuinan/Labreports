@@ -16,3 +16,5 @@ Lab 5: https://lindsguinan.github.io/Labreports/Lab5.html
 Lab 6: https://lindsguinan.github.io/Labreports/Lab6.html
 
 Lab 7&8: https://lindsguinan.github.io/Labreports/Lab7&8.html
+
+Final: https://lindsguinan.github.io/Labreports/Final.html
