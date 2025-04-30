@@ -157,22 +157,64 @@ plt.show()
 
 
 </code></pre>
-             <p> Now we will use the function we just made to draw the a sierpinski triangle fractal with an initial side length of 400 and of order 4. </p>
+             <p> Part 2 is called L-Systems. We will now look at the code that uses an L-System with turtal graphics to draw a fractal tree. It works by first initializing the turtle graphics environment. Then the L-System is generated and defined with an axiom ('F') and a rewrite rule. This rule recursively replaces every 'F' with a longer string over 4 iterations, generating a complex command string. The draw_lsystem function interprets the generated string using turtle commands. The turtle starts at a specified location and draws the structure using green color, step size, and angle. The final drawing is a recursive, self-similar tree structure that mimics the branching patterns of natural trees.    </p>
         <pre><code class="language-python">
-   initializeTurtle()
+ # Initialize the turtle
+initializeTurtle()
 showturtle()
 
+# Function to apply L-system rules
+def apply_rule(char, rules):
+    return rules.get(char, char)
+
+# Function to generate L-system string
+def generate_lsystem(axiom, rules, iterations):
+    current_string = axiom
+    for _ in range(iterations):
+        current_string = ''.join([apply_rule(char, rules) for char in current_string])
+    return current_string
+
+# Function to draw the L-system with turtle
+def draw_lsystem(turtle_string, length, angle):
+    stack = []
+    for command in turtle_string:
+        if command == 'F':
+            forward(length)
+        elif command == '+':
+            left(angle)
+        elif command == '-':
+            right(angle)
+        elif command == '[':
+            position = (getx(), gety())
+            heading_angle = heading()
+            stack.append((position, heading_angle))
+        elif command == ']':
+            position, heading_angle = stack.pop()
+            jump(position[0], position[1])
+            face(heading_angle)
+
+# Define the L-system rules
+rules = {'F': 'FF+[+F-F-F]-[-F+F+F]'}
+
+axiom = 'F'
+iterations = 4
+
+# Generate the L-system string
+turtle_string = generate_lsystem(axiom, rules, iterations)
+
 # Set up the turtle
-jump(300, 500)
-face(90)
+jump(400, 500)
+face(0)
 color('green')
 
-# Draw the Sierpinski triangle
-length = 400
-order = 4
-sierpinski_triangle(length, order)
+# Draw the L-system fractal tree
+length = 8
+angle = 25
+draw_lsystem(turtle_string, length, angle)
 
+# Display the drawing
 show()
+
 
 </code></pre>
          <p>Next, we will introduce the code for the cellular automata. In this chunk of code, we will import NumPy and Matplotlib and define a function plot(x) for visualizing a 2d array. We will then generate a 100x100 grid initialized with zeros. It will set the element at position (0,50) to 1, effectively placing a white pixel in the grid at that location while keeping all other pixels black. The plot(C) function then visualizes this grid as a grayscale image using matplotlib. After this, we have a code that takes an integer value 90 and converts it into an 8-bit binary representation using Python's string syntax. </p>
